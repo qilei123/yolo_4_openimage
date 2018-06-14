@@ -1,0 +1,6 @@
+classes= 8
+train  = /data0/qilei_chen/OpenImagesChallenge2018/train_superson_image_list1.txt
+valid  = /data0/qilei_chen/OpenImagesChallenge2018/validation_superson_image_list1.txt
+names = /data0/qilei_chen/OpenImagesChallenge2018/train_superson_classes1.txt
+backup = backup_person1
+
