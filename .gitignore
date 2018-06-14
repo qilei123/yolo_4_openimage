@@ -18,7 +18,13 @@ submission/
 cfg/
 darknet
 .fuse*
-
+*.so
+*.a
+backup1
+backup_n
+backup_person
+bad.list
+darknet53.conv.74
 # OS Generated #
 .DS_Store*
 ehthumbs.db
