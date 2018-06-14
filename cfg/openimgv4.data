@@ -1,0 +1,6 @@
+classes= 599
+train  = /data0/qilei_chen/OpenImagesChallenge2018/train_image_list.txt
+valid  = /data0/qilei_chen/OpenImagesChallenge2018/validation_image_list.txt
+names = /data0/qilei_chen/OpenImagesChallenge2018/train-trainable_classes.txt
+backup = backup_n
+
