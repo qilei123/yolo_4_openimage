@@ -83,6 +83,7 @@ void resize_yolo_layer(layer *l, int w, int h)
 box get_yolo_box(float *x, float *biases, int n, int index, int i, int j, int lw, int lh, int w, int h, int stride)
 {
     box b;
+    //printf("get_yolo_box %d %f %d\n",i,x[index],lw);
     b.x = (i + x[index + 0*stride]) / lw;
     b.y = (j + x[index + 1*stride]) / lh;
     b.w = exp(x[index + 2*stride]) * biases[2*n]   / w;
@@ -93,6 +94,8 @@ box get_yolo_box(float *x, float *biases, int n, int index, int i, int j, int lw
 float delta_yolo_box(box truth, float *x, float *biases, int n, int index, int i, int j, int lw, int lh, int w, int h, float *delta, float scale, int stride)
 {
     box pred = get_yolo_box(x, biases, n, index, i, j, lw, lh, w, h, stride);
+    //printf("pred = %f %f %f %f\n",pred.x,pred.y,pred.w,pred.h);
+    //printf("truth = %f %f %f %f\n",truth.x,truth.y,truth.w,truth.h);
     float iou = box_iou(pred, truth);
 
     float tx = (truth.x*lw - i);
@@ -192,6 +195,7 @@ void forward_yolo_layer(const layer l, network net)
                 }
             }
         }
+        //printf("l.max_boxes = %d\n",l.max_boxes);
         for(t = 0; t < l.max_boxes; ++t){
             box truth = float_to_box(net.truth + t*(4 + 1) + b*l.truths, 1);
 
@@ -214,6 +218,7 @@ void forward_yolo_layer(const layer l, network net)
             }
 
             int mask_n = int_index(l.mask, best_n, l.n);
+            //printf("mask_n = %d\n",mask_n);
             if(mask_n >= 0){
                 int box_index = entry_index(l, b, mask_n*l.w*l.h + j*l.w + i, 0);
                 float iou = delta_yolo_box(truth, l.output, l.biases, best_n, box_index, i, j, l.w, l.h, net.w, net.h, l.delta, (2-truth.w*truth.h), l.w*l.h);
@@ -231,11 +236,13 @@ void forward_yolo_layer(const layer l, network net)
                 ++class_count;
                 if(iou > .5) recall += 1;
                 if(iou > .75) recall75 += 1;
+                //printf("iou = %f\n",iou);
                 avg_iou += iou;
             }
         }
     }
     *(l.cost) = pow(mag_array(l.delta, l.outputs * l.batch), 2);
+    printf("avg_iou=%f,avg_cat=%f,class_count=%d,avg_obj=%f\n",avg_iou,avg_cat,class_count,avg_obj);
     printf("Region %d Avg IOU: %f, Class: %f, Obj: %f, No Obj: %f, .5R: %f, .75R: %f,  count: %d\n", net.index, avg_iou/count, avg_cat/class_count, avg_obj/count, avg_anyobj/(l.w*l.h*l.n*l.batch), recall/count, recall75/count, count);
 }
 

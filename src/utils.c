@@ -227,6 +227,30 @@ void find_replace(char *str, char *orig, char *rep, char *output)
     *p = '\0';
 
     sprintf(output, "%s%s%s", buffer, rep, p+strlen(orig));
+    
+    //find_replace(output,"train","yolo_t_superson_annos",output);
+    //find_replace(output,"validation","yolo_v_superson_annos",output);
+    
+    
+    find_replace(output,"train","yolo_t_annos",output);
+    find_replace(output,"validation","yolo_v_annos",output);
+         
+}
+
+void find_replace1(char *str, char *orig, char *rep, char *output)
+{
+    char buffer[4096] = {0};
+    char *p;
+
+    sprintf(buffer, "%s", str);
+    if(!(p = strstr(buffer, orig))){  // Is 'orig' even in 'str'?
+        sprintf(output, "%s", str);
+        return;
+    }
+
+    *p = '\0';
+
+    sprintf(output, "%s%s%s", buffer, rep, p+strlen(orig));
 }
 
 float sec(clock_t clocks)

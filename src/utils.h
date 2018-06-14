@@ -49,5 +49,6 @@ float sec(clock_t clocks);
 void print_statistics(float *a, int n);
 int int_index(int *a, int val, int n);
 
+void find_replace1(char *str, char *orig, char *rep, char *output);
 #endif
 
