@@ -231,9 +231,11 @@ void find_replace(char *str, char *orig, char *rep, char *output)
     //find_replace(output,"train","yolo_t_superson_annos",output);
     //find_replace(output,"validation","yolo_v_superson_annos",output);
     
-    
-    find_replace(output,"train","yolo_t_annos",output);
-    find_replace(output,"validation","yolo_v_annos",output);
+    find_replace(output,"train","yolo_t_superson_annos1",output);
+    find_replace(output,"validation","yolo_v_superson_annos1",output);
+
+    //find_replace(output,"train","yolo_t_annos",output);
+    //find_replace(output,"validation","yolo_v_annos",output);
          
 }
 
