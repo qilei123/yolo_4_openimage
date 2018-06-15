@@ -27,6 +27,7 @@ backup*
 bad.list
 darknet53.conv.74
 ./Makefile
+Makefile
 # OS Generated #
 .DS_Store*
 ehthumbs.db
